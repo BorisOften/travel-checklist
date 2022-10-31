@@ -9,21 +9,37 @@
 /* Begin PBXBuildFile section */
 		81F0B481290C81EE008B1B84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B480290C81EE008B1B84 /* AppDelegate.swift */; };
 		81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B482290C81EE008B1B84 /* SceneDelegate.swift */; };
-		81F0B485290C81EE008B1B84 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B484290C81EE008B1B84 /* ViewController.swift */; };
 		81F0B488290C81EE008B1B84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F0B486290C81EE008B1B84 /* Main.storyboard */; };
 		81F0B48A290C81F3008B1B84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F0B489290C81F3008B1B84 /* Assets.xcassets */; };
 		81F0B48D290C81F3008B1B84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F0B48B290C81F3008B1B84 /* LaunchScreen.storyboard */; };
+		81F0B495290C8299008B1B84 /* welcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B494290C8299008B1B84 /* welcomeViewController.swift */; };
+		81F0B499290C85D9008B1B84 /* DestinationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B498290C85D9008B1B84 /* DestinationsViewController.swift */; };
+		81F0B49B290C85F6008B1B84 /* PastDestinationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B49A290C85F6008B1B84 /* PastDestinationsViewController.swift */; };
+		81F0B4CC290E2234008B1B84 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4CB290E2234008B1B84 /* Destination.swift */; };
+		81F0B4CE290E238D008B1B84 /* DestinationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4CD290E238D008B1B84 /* DestinationCell.swift */; };
+		81F0B4D0290E3057008B1B84 /* PackingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4CF290E3057008B1B84 /* PackingListCell.swift */; };
+		81F0B4D2290E3543008B1B84 /* PackingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4D1290E3543008B1B84 /* PackingListViewController.swift */; };
+		81F0B4D4290F3CA7008B1B84 /* PastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4D3290F3CA7008B1B84 /* PastCell.swift */; };
+		81F0B4D6290F3EE1008B1B84 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		81F0B47D290C81EE008B1B84 /* my-travel-checklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "my-travel-checklist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F0B480290C81EE008B1B84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81F0B482290C81EE008B1B84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		81F0B484290C81EE008B1B84 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		81F0B487290C81EE008B1B84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		81F0B489290C81F3008B1B84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81F0B48C290C81F3008B1B84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		81F0B48E290C81F3008B1B84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81F0B494290C8299008B1B84 /* welcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = welcomeViewController.swift; sourceTree = "<group>"; };
+		81F0B498290C85D9008B1B84 /* DestinationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationsViewController.swift; sourceTree = "<group>"; };
+		81F0B49A290C85F6008B1B84 /* PastDestinationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastDestinationsViewController.swift; sourceTree = "<group>"; };
+		81F0B4CB290E2234008B1B84 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
+		81F0B4CD290E238D008B1B84 /* DestinationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCell.swift; sourceTree = "<group>"; };
+		81F0B4CF290E3057008B1B84 /* PackingListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListCell.swift; sourceTree = "<group>"; };
+		81F0B4D1290E3543008B1B84 /* PackingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListViewController.swift; sourceTree = "<group>"; };
+		81F0B4D3290F3CA7008B1B84 /* PastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastCell.swift; sourceTree = "<group>"; };
+		81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +72,47 @@
 		81F0B47F290C81EE008B1B84 /* my-travel-checklist */ = {
 			isa = PBXGroup;
 			children = (
+				81F0B4C5290CDC4C008B1B84 /* Controllers */,
+				81F0B4C4290CDC3E008B1B84 /* Models */,
+				81F0B497290C82B0008B1B84 /* Files */,
 				81F0B480290C81EE008B1B84 /* AppDelegate.swift */,
-				81F0B482290C81EE008B1B84 /* SceneDelegate.swift */,
-				81F0B484290C81EE008B1B84 /* ViewController.swift */,
 				81F0B486290C81EE008B1B84 /* Main.storyboard */,
 				81F0B489290C81F3008B1B84 /* Assets.xcassets */,
 				81F0B48B290C81F3008B1B84 /* LaunchScreen.storyboard */,
-				81F0B48E290C81F3008B1B84 /* Info.plist */,
+				81F0B4CD290E238D008B1B84 /* DestinationCell.swift */,
+				81F0B4CF290E3057008B1B84 /* PackingListCell.swift */,
+				81F0B4D3290F3CA7008B1B84 /* PastCell.swift */,
 			);
 			path = "my-travel-checklist";
+			sourceTree = "<group>";
+		};
+		81F0B497290C82B0008B1B84 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				81F0B48E290C81F3008B1B84 /* Info.plist */,
+				81F0B482290C81EE008B1B84 /* SceneDelegate.swift */,
+			);
+			name = Files;
+			sourceTree = "<group>";
+		};
+		81F0B4C4290CDC3E008B1B84 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				81F0B4CB290E2234008B1B84 /* Destination.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		81F0B4C5290CDC4C008B1B84 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				81F0B494290C8299008B1B84 /* welcomeViewController.swift */,
+				81F0B498290C85D9008B1B84 /* DestinationsViewController.swift */,
+				81F0B49A290C85F6008B1B84 /* PastDestinationsViewController.swift */,
+				81F0B4D1290E3543008B1B84 /* PackingListViewController.swift */,
+				81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +186,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F0B485290C81EE008B1B84 /* ViewController.swift in Sources */,
+				81F0B495290C8299008B1B84 /* welcomeViewController.swift in Sources */,
+				81F0B4D0290E3057008B1B84 /* PackingListCell.swift in Sources */,
+				81F0B4D6290F3EE1008B1B84 /* AboutViewController.swift in Sources */,
 				81F0B481290C81EE008B1B84 /* AppDelegate.swift in Sources */,
+				81F0B4CC290E2234008B1B84 /* Destination.swift in Sources */,
+				81F0B4D2290E3543008B1B84 /* PackingListViewController.swift in Sources */,
+				81F0B4D4290F3CA7008B1B84 /* PastCell.swift in Sources */,
+				81F0B4CE290E238D008B1B84 /* DestinationCell.swift in Sources */,
 				81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */,
+				81F0B499290C85D9008B1B84 /* DestinationsViewController.swift in Sources */,
+				81F0B49B290C85F6008B1B84 /* PastDestinationsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
