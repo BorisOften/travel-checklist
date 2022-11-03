@@ -96,11 +96,11 @@
                         <viewLayoutGuide key="safeArea" id="4jP-tf-yjM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Past" id="ycX-p9-cS5"/>
+                    <navigationItem key="navigationItem" title="Past" id="xnY-9i-AeR"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uSC-ct-4iC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1182.608695652174" y="481.47321428571428"/>
+            <point key="canvasLocation" x="2092.753623188406" y="481.47321428571428"/>
         </scene>
         <!--Destinations-->
         <scene sceneID="sX2-EP-AxT">
@@ -273,6 +273,11 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mbd-4e-Vqv">
+                                                            <rect key="frame" x="19" y="21" width="381" height="2"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" systemColor="linkColor"/>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 </view>
@@ -280,6 +285,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cellBackgroundView" destination="zYy-wj-BnV" id="9pJ-d4-K37"/>
+                                            <outlet property="checkedView" destination="Mbd-4e-Vqv" id="0XR-GB-haf"/>
                                             <outlet property="itemNameLabel" destination="FOD-Rx-fBN" id="VwD-lj-AEd"/>
                                         </connections>
                                     </tableViewCell>
@@ -331,7 +337,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="DRd-dZ-VpO" kind="relationship" relationship="viewControllers" id="pEz-1d-Hph"/>
-                        <segue destination="H1s-GF-T70" kind="relationship" relationship="viewControllers" id="glo-KK-RXE"/>
+                        <segue destination="D3X-sS-JdP" kind="relationship" relationship="viewControllers" id="glo-KK-RXE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N9I-ct-Ue4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -362,8 +368,31 @@
             </objects>
             <point key="canvasLocation" x="882.60869565217399" y="-501.5625"/>
         </scene>
+        <!--Past-->
+        <scene sceneID="P5Y-2D-gcU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D3X-sS-JdP" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Past" id="ycX-p9-cS5"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ICi-Dm-uJ3">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <navigationBarAppearance key="scrollEdgeAppearance"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="H1s-GF-T70" kind="relationship" relationship="rootViewController" id="pYH-LM-cak"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l8p-sC-cs0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1182.608695652174" y="481.47321428571428"/>
+        </scene>
     </scenes>
     <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

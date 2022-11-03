@@ -9,32 +9,48 @@ import UIKit
 
 class PackingListViewController: UIViewController {
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     @IBOutlet weak var packingListTableView: UITableView!
     
-    var packingList = [String]()
-    var selectedItem = ""
+    var destination : Destination?
+    var list = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         packingListTableView.dataSource = self
         packingListTableView.delegate = self
+    
+        var packingList = destination?.listItems
         
+        if let items = packingList?.allObjects {
+            list = items as! [Item]
+        } else {
+            list = []
+        }
     }
+    
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var newtextField = UITextField()
-        var newDestination = Destination()
-        
+        var newItem = Item(context: context)
         
         let alert = UIAlertController(title: "Add a Destination to your list", message: "", preferredStyle: UIAlertController.Style.alert)
         
         let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
-                print(newtextField.text)
             
-            if let newItem = newtextField.text {
-                if newItem != ""{
-                    newDestination.locationName = newtextField.text!
-                    self.packingList.append(newItem)
+            if let newItemName = newtextField.text {
+                if newItemName != "" {
+                    newItem.name = newItemName
+                    self.destination?.addToListItems(newItem)
+                    
+                    do {
+                        try self.context.save()
+                        print("I got saved")
+                    } catch  {
+                        print("An error saving")
+                    }
+                    
                     self.packingListTableView.reloadData()
                 }
                 }
@@ -68,16 +84,17 @@ class PackingListViewController: UIViewController {
 extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        packingList.count
+        list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let currentItem = packingList[indexPath.row]
+        let currentItem = list[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell") as! PackingListCell
         
-        cell.itemNameLabel.text = currentItem
+        cell.checkedView.isHidden = true
+        cell.itemNameLabel.text = currentItem.name
         
         return cell
     }
@@ -85,6 +102,18 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+       
+        let cell = tableView.cellForRow(at: indexPath) as! PackingListCell
+        if cell.checkedView.isHidden == false {
+            cell.checkedView.isHidden = true
+        } else {
+            cell.checkedView.isHidden = false
+        }
+    }
+    
+    func selectedRow(tableView: UITableView, indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! PackingListCell
+        cell.checkedView.isHidden = false
     }
     
 }

@@ -9,24 +9,56 @@ import UIKit
 
 class DestinationsViewController: UIViewController{
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     var destinations = [Destination]()
-    var selectedDestination = Destination()
+    var selectedDestination: Destination?
     
     @IBOutlet weak var destinationTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        fetchDestinations()
+        
         destinationTableView.delegate = self
         destinationTableView.dataSource = self
+        
+        
+        //whereIsMySQLite()
+        //relationShipDemo()
+    }
+    /*func whereIsMySQLite() {
+        let path = FileManager
+            .default
+            .urls(for: .applicationSupportDirectory, in: .userDomainMask)
+            .last?
+            .absoluteString
+            .replacingOccurrences(of: "file://", with: "")
+            .removingPercentEncoding
+        
+        print(path ?? "Not found")*/
+    
+    func fetchDestinations(){
+        do {
+            self.destinations = try context.fetch(Destination.fetchRequest())
+            
+            DispatchQueue.main.async {
+                self.destinationTableView.reloadData()
+            }
+
+        } catch  {
+            print("An error fetching")
+        }
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var newtextField = UITextField()
-        var newDestination = Destination()
+        
+        let newDestination = Destination(context: context)
         
         
-        let alert = UIAlertController(title: "Add a Destination to your list", message: "", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Add a Destination to your list", message:nil, preferredStyle: UIAlertController.Style.alert)
         
         let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
                 print(newtextField.text)
@@ -36,6 +68,13 @@ class DestinationsViewController: UIViewController{
                     newDestination.locationName = newtextField.text!
                     //self.selectedDestination.itemsArray.append(newItem)
                     self.destinations.append(newDestination)
+                    
+                    do {
+                        try self.context.save()
+                    } catch  {
+                        print(error)
+                        print("An error in destination saving")
+                    }
                     
                     self.destinationTableView.reloadData()
                 }
@@ -54,7 +93,6 @@ class DestinationsViewController: UIViewController{
         self.present(alert, animated: true, completion: nil)
         
     }
-
 }
 
 // Segue
@@ -64,6 +102,7 @@ extension DestinationsViewController {
             
             let packingListVC = segue.destination as! PackingListViewController
             
+            packingListVC.destination = selectedDestination
         }
     }
     
@@ -80,10 +119,13 @@ extension DestinationsViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let currentDestination = destinations[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "destinationCell") as! DestinationCell
-        cell.locationNameLabel.text = currentDestination.locationName
 
+        let cell = tableView.dequeueReusableCell(withIdentifier: "destinationCell") as! DestinationCell
+        
+        cell.locationNameLabel.text = currentDestination.locationName
+        
+        //cell.packedProgress.progress = Float(currentDestination.itemsPacked / (currentDestination.totalItems() + 1))
+        
         return cell
     }
     
@@ -91,9 +133,32 @@ extension DestinationsViewController : UITableViewDataSource, UITableViewDelegat
         
         selectedDestination = destinations[indexPath.row]
         
+        
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
         performSegue(withIdentifier: "goToList", sender: self)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action,view,completionHandler) in
+            print("I got deleted")
+        
+            let deleteDestination = self.destinations[indexPath.row]
+        
+            self.context.delete(deleteDestination)
+        
+        do {
+            try self.context.save()
+        } catch  {
+            print("error deleting")
+        }
+        
+            self.fetchDestinations()
+        
+        }
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
 }

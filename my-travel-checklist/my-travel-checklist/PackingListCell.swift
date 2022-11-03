@@ -15,6 +15,9 @@ class PackingListCell: UITableViewCell {
     @IBOutlet weak var cellBackgroundView: UIView!
     
     
+    @IBOutlet weak var checkedView: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
