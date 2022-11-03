@@ -18,22 +18,21 @@ class PackingListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         packingListTableView.dataSource = self
         packingListTableView.delegate = self
-    
-        var packingList = destination?.listItems
         
-        if let items = packingList?.allObjects {
-            list = items as! [Item]
-        } else {
-            list = []
-        }
+        getList()
+        
     }
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var newtextField = UITextField()
         var newItem = Item(context: context)
+        newItem.isPacked = false
+        
+        destination?.totalItems += 1
         
         let alert = UIAlertController(title: "Add a Destination to your list", message: "", preferredStyle: UIAlertController.Style.alert)
         
@@ -44,15 +43,9 @@ class PackingListViewController: UIViewController {
                     newItem.name = newItemName
                     self.destination?.addToListItems(newItem)
                     
-                    do {
-                        try self.context.save()
-                        print("I got saved")
-                    } catch  {
-                        print("An error saving")
-                    }
+                    self.coreDataSave()
                     
-                    self.packingListTableView.reloadData()
-                }
+                    }
                 }
             }
 
@@ -93,7 +86,9 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell") as! PackingListCell
         
-        cell.checkedView.isHidden = true
+        // has to be the opposite of isPacked
+        // So if an item is packed (true), we do NOT hid view ( False )
+        cell.checkedView.isHidden =  !currentItem.isPacked
         cell.itemNameLabel.text = currentItem.name
         
         return cell
@@ -102,13 +97,21 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        var selectedItem = list[indexPath.row]
+        
        
         let cell = tableView.cellForRow(at: indexPath) as! PackingListCell
-        if cell.checkedView.isHidden == false {
-            cell.checkedView.isHidden = true
-        } else {
+        
+        if selectedItem.isPacked == false {
             cell.checkedView.isHidden = false
+            selectedItem.isPacked = true
+        } else {
+            cell.checkedView.isHidden = true
+            selectedItem.isPacked = false
         }
+        
+        coreDataSave()
     }
     
     func selectedRow(tableView: UITableView, indexPath: IndexPath) {
@@ -116,4 +119,48 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         cell.checkedView.isHidden = false
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action,view,completionHandler) in
+            print("I got deleted")
+        
+            let deleteItem = self.list[indexPath.row]
+        
+            self.context.delete(deleteItem)
+        
+            self.coreDataSave()
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
 }
+
+//Core data save
+extension PackingListViewController {
+    
+    func getList(){
+        
+        if let items = destination?.listItems?.allObjects {
+            list = items as! [Item]
+        } else {
+            list = []
+        }
+        
+        self.packingListTableView.reloadData()
+    }
+    
+    
+    func coreDataSave(){
+       
+        do {
+            try self.context.save()
+        } catch  {
+            print(error)
+            print("An error in destination saving")
+        }
+        getList()
+    }
+    
+    
+}
+

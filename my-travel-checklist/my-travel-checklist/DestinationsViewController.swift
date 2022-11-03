@@ -24,32 +24,6 @@ class DestinationsViewController: UIViewController{
         destinationTableView.delegate = self
         destinationTableView.dataSource = self
         
-        
-        //whereIsMySQLite()
-        //relationShipDemo()
-    }
-    /*func whereIsMySQLite() {
-        let path = FileManager
-            .default
-            .urls(for: .applicationSupportDirectory, in: .userDomainMask)
-            .last?
-            .absoluteString
-            .replacingOccurrences(of: "file://", with: "")
-            .removingPercentEncoding
-        
-        print(path ?? "Not found")*/
-    
-    func fetchDestinations(){
-        do {
-            self.destinations = try context.fetch(Destination.fetchRequest())
-            
-            DispatchQueue.main.async {
-                self.destinationTableView.reloadData()
-            }
-
-        } catch  {
-            print("An error fetching")
-        }
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -61,25 +35,16 @@ class DestinationsViewController: UIViewController{
         let alert = UIAlertController(title: "Add a Destination to your list", message:nil, preferredStyle: UIAlertController.Style.alert)
         
         let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
-                print(newtextField.text)
             
             if let newItem = newtextField.text {
                 if newItem != ""{
                     newDestination.locationName = newtextField.text!
                     //self.selectedDestination.itemsArray.append(newItem)
                     self.destinations.append(newDestination)
-                    
-                    do {
-                        try self.context.save()
-                    } catch  {
-                        print(error)
-                        print("An error in destination saving")
-                    }
-                    
-                    self.destinationTableView.reloadData()
-                }
+                    self.coreDataSave()
                 }
             }
+        }
 
         alert.addTextField { (textField) in
             textField.placeholder = "add a Destination"
@@ -91,7 +56,6 @@ class DestinationsViewController: UIViewController{
         
         // show the alert
         self.present(alert, animated: true, completion: nil)
-        
     }
 }
 
@@ -105,9 +69,7 @@ extension DestinationsViewController {
             packingListVC.destination = selectedDestination
         }
     }
-    
 }
-
 
 // destination tableView
 extension DestinationsViewController : UITableViewDataSource, UITableViewDelegate {
@@ -133,8 +95,6 @@ extension DestinationsViewController : UITableViewDataSource, UITableViewDelegat
         
         selectedDestination = destinations[indexPath.row]
         
-        
-        
         tableView.deselectRow(at: indexPath, animated: true)
         
         performSegue(withIdentifier: "goToList", sender: self)
@@ -149,16 +109,39 @@ extension DestinationsViewController : UITableViewDataSource, UITableViewDelegat
         
             self.context.delete(deleteDestination)
         
-        do {
-            try self.context.save()
-        } catch  {
-            print("error deleting")
-        }
-        
-            self.fetchDestinations()
-        
+            self.coreDataSave()
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
     
+}
+
+// Core Data
+extension DestinationsViewController {
+    
+    func fetchDestinations(){
+        do {
+            self.destinations = try context.fetch(Destination.fetchRequest())
+            
+            DispatchQueue.main.async {
+                self.destinationTableView.reloadData()
+            }
+
+        } catch  {
+            print("An error fetching")
+        }
+        self.destinationTableView.reloadData()
+    }
+    
+    
+    func coreDataSave(){
+       
+        do {
+            try self.context.save()
+        } catch  {
+            print(error)
+            print("An error in destination saving")
+        }
+        fetchDestinations()
+    }
 }

@@ -21,7 +21,6 @@
 		81F0B4D4290F3CA7008B1B84 /* PastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4D3290F3CA7008B1B84 /* PastCell.swift */; };
 		81F0B4D6290F3EE1008B1B84 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */; };
 		81F0B56E29129989008B1B84 /* my-travel-checklist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B56C29129989008B1B84 /* my-travel-checklist.xcdatamodeld */; };
-		81F0B58A29134281008B1B84 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B58929134281008B1B84 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +40,6 @@
 		81F0B4D3290F3CA7008B1B84 /* PastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastCell.swift; sourceTree = "<group>"; };
 		81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		81F0B56D29129989008B1B84 /* my-travel-checklist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "my-travel-checklist.xcdatamodel"; sourceTree = "<group>"; };
-		81F0B58929134281008B1B84 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +99,6 @@
 		81F0B4C4290CDC3E008B1B84 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				81F0B58929134281008B1B84 /* CoreDataManager.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -195,7 +192,6 @@
 				81F0B481290C81EE008B1B84 /* AppDelegate.swift in Sources */,
 				81F0B56E29129989008B1B84 /* my-travel-checklist.xcdatamodeld in Sources */,
 				81F0B4D2290E3543008B1B84 /* PackingListViewController.swift in Sources */,
-				81F0B58A29134281008B1B84 /* CoreDataManager.swift in Sources */,
 				81F0B4D4290F3CA7008B1B84 /* PastCell.swift in Sources */,
 				81F0B4CE290E238D008B1B84 /* DestinationCell.swift in Sources */,
 				81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */,
