@@ -304,6 +304,9 @@
                                         <rect key="frame" x="341" y="16" width="45" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <buttonConfiguration key="configuration" style="plain"/>
+                                        <connections>
+                                            <segue destination="lbz-5R-Y8Z" kind="show" id="ggE-zZ-q8Q"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </view>
@@ -320,11 +323,41 @@
                     </navigationItem>
                     <connections>
                         <outlet property="packingListTableView" destination="41e-t1-jLn" id="1hG-K2-M8X"/>
+                        <outlet property="searchBar" destination="5c8-fU-L0G" id="07z-KX-tj5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYD-Um-fiP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2953.6231884057975" y="-213.61607142857142"/>
+        </scene>
+        <!--Select-->
+        <scene sceneID="WX1-zi-HFd">
+            <objects>
+                <tableViewController id="lbz-5R-Y8Z" customClass="SelectFromListTableViewController" customModule="my_travel_checklist" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Z49-Et-9Yb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="LEP-7y-2iN">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LEP-7y-2iN" id="9pR-iT-xPD">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lbz-5R-Y8Z" id="bdw-g3-dCN"/>
+                            <outlet property="delegate" destination="lbz-5R-Y8Z" id="mRc-gj-SuE"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select" id="ocV-aO-Jpn"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qnO-LY-9Sp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3783" y="-214"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wNd-vd-Fqd">

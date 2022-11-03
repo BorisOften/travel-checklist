@@ -13,8 +13,12 @@ class PackingListViewController: UIViewController {
     
     @IBOutlet weak var packingListTableView: UITableView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var destination : Destination?
-    var list = [Item]()
+    var list = [Items]()
+    
+    var searchBarText = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +26,18 @@ class PackingListViewController: UIViewController {
         packingListTableView.dataSource = self
         packingListTableView.delegate = self
         
+        searchBar.delegate = self
+        
         getList()
+        
+        
         
     }
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var newtextField = UITextField()
-        var newItem = Item(context: context)
+        let newItem = Items(context: context)
         newItem.isPacked = false
         
         destination?.totalItems += 1
@@ -44,7 +52,7 @@ class PackingListViewController: UIViewController {
                     self.destination?.addToListItems(newItem)
                     
                     self.coreDataSave()
-                    
+
                     }
                 }
             }
@@ -73,6 +81,31 @@ class PackingListViewController: UIViewController {
 
 }
 
+
+//Search Bar
+extension PackingListViewController : UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchBarText = searchText
+        if searchText.isEmpty{
+            getList()
+        } else {
+            searchForItem(itemName: searchText)
+        }
+    }
+    
+    //
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBarText == "" {
+            getList()
+        } else {
+            searchForItem(itemName: searchBarText)
+        }
+        view.endEditing(true)
+    }
+}
+
+
 // packingList TableView
 extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
     
@@ -99,7 +132,6 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         tableView.deselectRow(at: indexPath, animated: true)
         
         var selectedItem = list[indexPath.row]
-        
        
         let cell = tableView.cellForRow(at: indexPath) as! PackingListCell
         
@@ -112,28 +144,47 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         coreDataSave()
-    }
-    
-    func selectedRow(tableView: UITableView, indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! PackingListCell
-        cell.checkedView.isHidden = false
+
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let action = UIContextualAction(style: .destructive, title: "Delete") { (action,view,completionHandler) in
-            print("I got deleted")
-        
+            
             let deleteItem = self.list[indexPath.row]
         
             self.context.delete(deleteItem)
-        
+            self.destination?.totalItems -= 1
+            
             self.coreDataSave()
+            
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
     
 }
+
+//Searching function
+extension PackingListViewController {
+
+    func searchForItem(itemName : String) {
+        var searchedItemList = [Items]()
+        for listItems in list {
+            print("Here up")
+            print(listItems.name!)
+            print(itemName)
+            //change both text to be lower case
+            if listItems.name!.lowercased().contains(itemName.lowercased()){
+                print("Here")
+                searchedItemList.append(listItems)
+            }
+            list = searchedItemList
+        }
+        self.packingListTableView.reloadData()
+    }
+}
+
+//Sorting
 
 //Core data save
 extension PackingListViewController {
@@ -141,12 +192,17 @@ extension PackingListViewController {
     func getList(){
         
         if let items = destination?.listItems?.allObjects {
-            list = items as! [Item]
+            list = items as! [Items]
         } else {
             list = []
         }
-        
-        self.packingListTableView.reloadData()
+        //list.sort(by: {$0.name! > $1.name! })
+        list.sort(by: {!$0.isPacked && $1.isPacked })
+        //list.sorted(by: {$0.isPacked > $1.name! })
+            
+        DispatchQueue.main.async {
+            self.packingListTableView.reloadData()
+        }
     }
     
     
@@ -159,6 +215,7 @@ extension PackingListViewController {
             print("An error in destination saving")
         }
         getList()
+        
     }
     
     

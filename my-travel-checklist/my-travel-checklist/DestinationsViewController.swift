@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DestinationsViewController: UIViewController{
+class DestinationsViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -23,6 +23,8 @@ class DestinationsViewController: UIViewController{
         
         destinationTableView.delegate = self
         destinationTableView.dataSource = self
+        
+        setupLongPressGesture()
         
     }
     
@@ -106,14 +108,62 @@ extension DestinationsViewController : UITableViewDataSource, UITableViewDelegat
             print("I got deleted")
         
             let deleteDestination = self.destinations[indexPath.row]
-        
+            
             self.context.delete(deleteDestination)
-        
             self.coreDataSave()
         }
+        
         return UISwipeActionsConfiguration(actions: [action])
     }
-    
+}
+
+// Long press table cell
+extension DestinationsViewController : UIGestureRecognizerDelegate {
+    func setupLongPressGesture() {
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
+        longPressGesture.minimumPressDuration = 1.0 // 1 second press
+        longPressGesture.delegate = self
+        self.destinationTableView.addGestureRecognizer(longPressGesture)
+    }
+
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: self.destinationTableView)
+            if let indexPath = destinationTableView.indexPathForRow(at: touchPoint) {
+                
+                selectedDestination = destinations[indexPath.row]
+               
+                var newtextField = UITextField()
+                
+                let alert = UIAlertController(title: "Edit Destination", message:nil, preferredStyle: UIAlertController.Style.alert)
+                
+                let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
+                    
+                    if let newItem = newtextField.text {
+                        if newItem != ""{
+                            self.selectedDestination!.locationName = newtextField.text!
+                            
+                            self.coreDataSave()
+                        }
+                    }
+                }
+
+                alert.addTextField { (textField) in
+                    textField.text = self.selectedDestination?.locationName
+                    newtextField = textField
+                }
+                
+                alert.addAction(save)
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+                
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+            }
+               
+            
+        }
+    }
+
 }
 
 // Core Data
