@@ -22,6 +22,7 @@
 		81F0B4D6290F3EE1008B1B84 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */; };
 		81F0B56E29129989008B1B84 /* my-travel-checklist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B56C29129989008B1B84 /* my-travel-checklist.xcdatamodeld */; };
 		81F0B58C29143E10008B1B84 /* SelectFromListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B58B29143E0F008B1B84 /* SelectFromListTableViewController.swift */; };
+		81F0B58E29148285008B1B84 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B58D29148285008B1B84 /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		81F0B56D29129989008B1B84 /* my-travel-checklist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "my-travel-checklist.xcdatamodel"; sourceTree = "<group>"; };
 		81F0B58B29143E0F008B1B84 /* SelectFromListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromListTableViewController.swift; sourceTree = "<group>"; };
+		81F0B58D29148285008B1B84 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				81F0B4D1290E3543008B1B84 /* PackingListViewController.swift */,
 				81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */,
 				81F0B58B29143E0F008B1B84 /* SelectFromListTableViewController.swift */,
+				81F0B58D29148285008B1B84 /* AlertViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				81F0B4CE290E238D008B1B84 /* DestinationCell.swift in Sources */,
 				81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */,
 				81F0B499290C85D9008B1B84 /* DestinationsViewController.swift in Sources */,
+				81F0B58E29148285008B1B84 /* AlertViewController.swift in Sources */,
 				81F0B49B290C85F6008B1B84 /* PastDestinationsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

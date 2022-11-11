@@ -14,11 +14,18 @@ class DestinationsViewController: UIViewController {
     var destinations = [Destination]()
     var selectedDestination: Destination?
     
+    var datePicker = UIDatePicker()
+    var dateTextField = UITextField()
+    var pickedDate = UIDatePicker()
+    let toolBar = UIToolbar()
+    
+        
     @IBOutlet weak var destinationTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         fetchDestinations()
         
         destinationTableView.delegate = self
@@ -28,8 +35,11 @@ class DestinationsViewController: UIViewController {
         
     }
     
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        var newtextField = UITextField()
+
+    
+    /*@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var newDestinationtextField = UITextField()
+        var newDatetextField = UITextField()
         
         let newDestination = Destination(context: context)
         
@@ -38,9 +48,9 @@ class DestinationsViewController: UIViewController {
         
         let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
             
-            if let newItem = newtextField.text {
+            if let newItem = newDestinationtextField.text {
                 if newItem != ""{
-                    newDestination.locationName = newtextField.text!
+                    newDestination.locationName = newDestinationtextField.text!
                     //self.selectedDestination.itemsArray.append(newItem)
                     self.destinations.append(newDestination)
                     self.coreDataSave()
@@ -49,8 +59,17 @@ class DestinationsViewController: UIViewController {
         }
 
         alert.addTextField { (textField) in
-            textField.placeholder = "add a Destination"
-            newtextField = textField
+            textField.placeholder = "Add a Destination"
+            newDestinationtextField = textField
+        }
+        
+        alert.addTextField { (textField) in
+            self.doDatePicker()
+            textField.inputView = self.datePicker
+            textField.inputAccessoryView = self.toolBar
+            textField.placeholder = "Add a Date"
+            print("This is the date \(self.dateTextField.text)")
+            textField.text = self.dateTextField.text
         }
         
         alert.addAction(save)
@@ -58,7 +77,7 @@ class DestinationsViewController: UIViewController {
         
         // show the alert
         self.present(alert, animated: true, completion: nil)
-    }
+    }*/
 }
 
 // Segue
@@ -138,11 +157,9 @@ extension DestinationsViewController : UIGestureRecognizerDelegate {
                 let alert = UIAlertController(title: "Edit Destination", message:nil, preferredStyle: UIAlertController.Style.alert)
                 
                 let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
-                    
                     if let newItem = newtextField.text {
                         if newItem != ""{
                             self.selectedDestination!.locationName = newtextField.text!
-                            
                             self.coreDataSave()
                         }
                     }
@@ -159,8 +176,6 @@ extension DestinationsViewController : UIGestureRecognizerDelegate {
                 // show the alert
                 self.present(alert, animated: true, completion: nil)
             }
-               
-            
         }
     }
 
@@ -193,5 +208,52 @@ extension DestinationsViewController {
             print("An error in destination saving")
         }
         fetchDestinations()
+    }
+}
+
+
+// date picker
+extension DestinationsViewController {
+    
+    func doDatePicker(){
+        // DatePicker
+      // datePicker = UIDatePicker()
+        
+        datePicker.preferredDatePickerStyle = .wheels
+        self.datePicker.backgroundColor = UIColor.white
+        datePicker.datePickerMode = .date
+
+        // ToolBar
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        toolBar.sizeToFit()
+
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: true)
+        toolBar.isUserInteractionEnabled = true
+
+        self.toolBar.isHidden = false
+
+    }
+
+    @objc func doneClick() {
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateStyle = .medium
+        dateTextField.text = "\(datePicker.date)"
+        pickedDate = datePicker
+        print("I was clicked")
+        print(pickedDate.date)
+        //datePicker.isHidden = true
+        //self.toolBar.isHidden = true
+    }
+
+    @objc func cancelClick() {
+        //datePicker.isHidden = true
+        //self.toolBar.isHidden = true
+        
     }
 }
