@@ -31,56 +31,57 @@ class PackingListViewController: UIViewController {
         getList()
         
         
-        
     }
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var newtextField = UITextField()
+        var quantityTextField = UITextField()
         let newItem = Items(context: context)
+        newItem.date = Date()
         newItem.isPacked = false
         
-        destination?.totalItems += 1
-        
-        let alert = UIAlertController(title: "Add a Destination to your list", message: "", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Add an Item to your list", message: "", preferredStyle: UIAlertController.Style.alert)
         
         let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
             
-            if let newItemName = newtextField.text {
+            if let newItemName = newtextField.text, let newQuantity = quantityTextField.text {
                 if newItemName != "" {
                     newItem.name = newItemName
-                    self.destination?.addToListItems(newItem)
-                    
-                    self.coreDataSave()
 
                     }
+                if newQuantity != "" {
+                    newItem.quantity = Int64(newQuantity)!
+                }
+                self.destination?.addToListItems(newItem)
+                self.destination?.totalItems += 1
+                
+                self.coreDataSave()
                 }
             }
 
         alert.addTextField { (textField) in
-            textField.placeholder = "add a Destination"
+            textField.placeholder = "add an Item"
             newtextField = textField
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "add quantity"
+            textField.keyboardType = .numberPad
+            quantityTextField = textField
         }
         
         alert.addAction(save)
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
         
         // show the alert
-        self.present(alert, animated: true, completion: nil)    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        self.present(alert, animated: true, completion: nil)
     }
-    */
-
+    
+    @IBAction func sortButtonPressed(_ sender: UIButton) {
+        destination?.sortBy = "DateEariestFirst"
+        getList()
+    }
 }
-
 
 //Search Bar
 extension PackingListViewController : UISearchBarDelegate {
@@ -124,6 +125,8 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         cell.checkedView.isHidden =  !currentItem.isPacked
         cell.itemNameLabel.text = currentItem.name
         
+        cell.quantityLabel.text = "x\(currentItem.quantity)"
+        
         return cell
     }
     
@@ -131,17 +134,21 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        var selectedItem = list[indexPath.row]
+        let selectedItem = list[indexPath.row]
        
         let cell = tableView.cellForRow(at: indexPath) as! PackingListCell
         
         if selectedItem.isPacked == false {
             cell.checkedView.isHidden = false
             selectedItem.isPacked = true
+            destination?.packedItems += 1
         } else {
             cell.checkedView.isHidden = true
             selectedItem.isPacked = false
+            destination?.packedItems -= 1
         }
+        print(destination?.totalItems)
+        print(destination?.packedItems)
         
         coreDataSave()
 
@@ -158,6 +165,8 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
             
             self.coreDataSave()
             
+            //check search list
+            
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
@@ -169,6 +178,8 @@ extension PackingListViewController {
 
     func searchForItem(itemName : String) {
         var searchedItemList = [Items]()
+        getList()
+        
         for listItems in list {
             print("Here up")
             print(listItems.name!)
@@ -178,8 +189,8 @@ extension PackingListViewController {
                 print("Here")
                 searchedItemList.append(listItems)
             }
-            list = searchedItemList
         }
+        list = searchedItemList
         self.packingListTableView.reloadData()
     }
 }
@@ -196,9 +207,7 @@ extension PackingListViewController {
         } else {
             list = []
         }
-        //list.sort(by: {$0.name! > $1.name! })
-        list.sort(by: {!$0.isPacked && $1.isPacked })
-        //list.sorted(by: {$0.isPacked > $1.name! })
+        sortedList()
             
         DispatchQueue.main.async {
             self.packingListTableView.reloadData()
@@ -217,7 +226,25 @@ extension PackingListViewController {
         getList()
         
     }
-    
+}
+
+//sorted list
+extension PackingListViewController {
+    func sortedList() {
+        
+            if destination?.sortBy == nil || destination?.sortBy == "Alphabetically" {
+                
+                list.sort(by: {$0.name!.lowercased() < $1.name!.lowercased() })
+            } else if destination?.sortBy == "DateEariestFirst" {
+                list.sort(by: {$0.date! > $1.date! })
+            } else if destination?.sortBy == "DateLatestFirst" {
+                list.sort(by: {$0.date! < $1.date! })
+            } else if destination?.sortBy == "CheckItems" {
+                list.sort(by: {$0.isPacked && !$1.isPacked })
+            } else if destination?.sortBy == "UnCheckItems" {
+                list.sort(by: {!$0.isPacked && $1.isPacked })
+            }
+        }
     
 }
 

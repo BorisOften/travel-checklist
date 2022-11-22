@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81D5E4C2291ED3DC007BB8E1 /* AddDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4C1291ED3DC007BB8E1 /* AddDestinationViewController.swift */; };
+		81D5E4CC29205C13007BB8E1 /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */; };
+		81D5E4CE29205CC8007BB8E1 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */; };
+		81D5E4D0292090E5007BB8E1 /* CustomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CF292090E5007BB8E1 /* CustomToolbar.swift */; };
 		81F0B481290C81EE008B1B84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B480290C81EE008B1B84 /* AppDelegate.swift */; };
 		81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B482290C81EE008B1B84 /* SceneDelegate.swift */; };
 		81F0B488290C81EE008B1B84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F0B486290C81EE008B1B84 /* Main.storyboard */; };
@@ -22,10 +26,13 @@
 		81F0B4D6290F3EE1008B1B84 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */; };
 		81F0B56E29129989008B1B84 /* my-travel-checklist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B56C29129989008B1B84 /* my-travel-checklist.xcdatamodeld */; };
 		81F0B58C29143E10008B1B84 /* SelectFromListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B58B29143E0F008B1B84 /* SelectFromListTableViewController.swift */; };
-		81F0B58E29148285008B1B84 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B58D29148285008B1B84 /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		81D5E4C1291ED3DC007BB8E1 /* AddDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDestinationViewController.swift; sourceTree = "<group>"; };
+		81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
+		81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
+		81D5E4CF292090E5007BB8E1 /* CustomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolbar.swift; sourceTree = "<group>"; };
 		81F0B47D290C81EE008B1B84 /* my-travel-checklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "my-travel-checklist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F0B480290C81EE008B1B84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81F0B482290C81EE008B1B84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,7 +50,6 @@
 		81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		81F0B56D29129989008B1B84 /* my-travel-checklist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "my-travel-checklist.xcdatamodel"; sourceTree = "<group>"; };
 		81F0B58B29143E0F008B1B84 /* SelectFromListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromListTableViewController.swift; sourceTree = "<group>"; };
-		81F0B58D29148285008B1B84 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		81D5E4CA29205BC8007BB8E1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */,
+				81D5E4CF292090E5007BB8E1 /* CustomToolbar.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		81F0B474290C81EE008B1B84 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +91,7 @@
 		81F0B47F290C81EE008B1B84 /* my-travel-checklist */ = {
 			isa = PBXGroup;
 			children = (
+				81D5E4CA29205BC8007BB8E1 /* Utils */,
 				81F0B4C5290CDC4C008B1B84 /* Controllers */,
 				81F0B4C4290CDC3E008B1B84 /* Models */,
 				81F0B497290C82B0008B1B84 /* Files */,
@@ -86,7 +102,6 @@
 				81F0B4CD290E238D008B1B84 /* DestinationCell.swift */,
 				81F0B4CF290E3057008B1B84 /* PackingListCell.swift */,
 				81F0B4D3290F3CA7008B1B84 /* PastCell.swift */,
-				81F0B56C29129989008B1B84 /* my-travel-checklist.xcdatamodeld */,
 			);
 			path = "my-travel-checklist";
 			sourceTree = "<group>";
@@ -103,6 +118,7 @@
 		81F0B4C4290CDC3E008B1B84 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				81F0B56C29129989008B1B84 /* my-travel-checklist.xcdatamodeld */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -116,7 +132,8 @@
 				81F0B4D1290E3543008B1B84 /* PackingListViewController.swift */,
 				81F0B4D5290F3EE1008B1B84 /* AboutViewController.swift */,
 				81F0B58B29143E0F008B1B84 /* SelectFromListTableViewController.swift */,
-				81F0B58D29148285008B1B84 /* AlertViewController.swift */,
+				81D5E4C1291ED3DC007BB8E1 /* AddDestinationViewController.swift */,
+				81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -202,8 +219,11 @@
 				81F0B4D4290F3CA7008B1B84 /* PastCell.swift in Sources */,
 				81F0B4CE290E238D008B1B84 /* DestinationCell.swift in Sources */,
 				81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */,
+				81D5E4C2291ED3DC007BB8E1 /* AddDestinationViewController.swift in Sources */,
 				81F0B499290C85D9008B1B84 /* DestinationsViewController.swift in Sources */,
-				81F0B58E29148285008B1B84 /* AlertViewController.swift in Sources */,
+				81D5E4D0292090E5007BB8E1 /* CustomToolbar.swift in Sources */,
+				81D5E4CC29205C13007BB8E1 /* CustomDatePicker.swift in Sources */,
+				81D5E4CE29205CC8007BB8E1 /* DummyViewController.swift in Sources */,
 				81F0B49B290C85F6008B1B84 /* PastDestinationsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

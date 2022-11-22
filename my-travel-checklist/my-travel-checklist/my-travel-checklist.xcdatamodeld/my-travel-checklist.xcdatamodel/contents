@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Destination" representedClassName=".Destination" syncable="YES" codeGenerationType="class">
-        <attribute name="locationName" optional="YES" attributeType="String"/>
+        <attribute name="locationName" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="packedItems" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sortBy" optional="YES" attributeType="String"/>
         <attribute name="totalItems" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="travelDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="weight" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="travelDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="listItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Items" inverseName="destination" inverseEntity="Items"/>
     </entity>
     <entity name="Items" representedClassName="Items" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="isPacked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
-        <attribute name="quantity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 64" defaultValueString="1" usesScalarValueType="YES"/>
         <relationship name="destination" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Destination" inverseName="listItems" inverseEntity="Destination"/>
     </entity>
 </model>

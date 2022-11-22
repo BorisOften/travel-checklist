@@ -14,70 +14,51 @@ class DestinationsViewController: UIViewController {
     var destinations = [Destination]()
     var selectedDestination: Destination?
     
-    var datePicker = UIDatePicker()
-    var dateTextField = UITextField()
-    var pickedDate = UIDatePicker()
-    let toolBar = UIToolbar()
-    
+    var isEditingDestination = false
+    var searchBarText = ""
         
     @IBOutlet weak var destinationTableView: UITableView!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         fetchDestinations()
         
         destinationTableView.delegate = self
         destinationTableView.dataSource = self
         
+        searchBar.delegate = self
+        
+        
+        
+        // for testing
+        //let newD = Destination(context: context)
+        //newD.travelDate = Date(timeIntervalSinceReferenceDate: -129.0)
+        //newD.locationName = "This is for Test 2"
+        //destinations.append(newD)
+        
         setupLongPressGesture()
         
     }
     
-
+    override func viewDidAppear(_ animated: Bool) {
+        fetchDestinations()
+        
+        isEditingDestination = false
+    }
+    @IBAction func sortButtonPressed(_ sender: UIButton) {
+        
+    }
     
-    /*@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        var newDestinationtextField = UITextField()
-        var newDatetextField = UITextField()
-        
-        let newDestination = Destination(context: context)
-        
-        
-        let alert = UIAlertController(title: "Add a Destination to your list", message:nil, preferredStyle: UIAlertController.Style.alert)
-        
-        let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
-            
-            if let newItem = newDestinationtextField.text {
-                if newItem != ""{
-                    newDestination.locationName = newDestinationtextField.text!
-                    //self.selectedDestination.itemsArray.append(newItem)
-                    self.destinations.append(newDestination)
-                    self.coreDataSave()
-                }
-            }
-        }
-
-        alert.addTextField { (textField) in
-            textField.placeholder = "Add a Destination"
-            newDestinationtextField = textField
-        }
-        
-        alert.addTextField { (textField) in
-            self.doDatePicker()
-            textField.inputView = self.datePicker
-            textField.inputAccessoryView = self.toolBar
-            textField.placeholder = "Add a Date"
-            print("This is the date \(self.dateTextField.text)")
-            textField.text = self.dateTextField.text
-        }
-        
-        alert.addAction(save)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
-        
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
-    }*/
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        //self.tabBarController?.tabBar.frame.size.height = 10
+        //self.tabBarController?.tabBar.frame.origin.y = view.frame.height - 95
+    }
+    
 }
 
 // Segue
@@ -88,6 +69,16 @@ extension DestinationsViewController {
             let packingListVC = segue.destination as! PackingListViewController
             
             packingListVC.destination = selectedDestination
+        }
+        
+        if segue.identifier == "goToAddDestination" {
+            let editDestinationVC = segue.destination as! AddDestinationViewController
+            
+            if isEditingDestination {
+                editDestinationVC.selectedDestination = selectedDestination
+            } else {
+                editDestinationVC.selectedDestination = nil
+            }
         }
     }
 }
@@ -107,8 +98,19 @@ extension DestinationsViewController : UITableViewDataSource, UITableViewDelegat
         
         cell.locationNameLabel.text = currentDestination.locationName
         
-        //cell.packedProgress.progress = Float(currentDestination.itemsPacked / (currentDestination.totalItems() + 1))
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
         
+        cell.dateLabel.text = formatter.string(from: currentDestination.travelDate!)
+        cell.itemPackTotalItemsLabel.text = "\(currentDestination.packedItems) / \(currentDestination.totalItems)"
+        
+        if currentDestination.totalItems != 0{
+            
+            cell.packedProgress.progress = Float(currentDestination.packedItems) / (Float(currentDestination.totalItems))
+        } else{
+            cell.packedProgress.progress = 0
+        }
         return cell
     }
     
@@ -138,10 +140,12 @@ extension DestinationsViewController : UITableViewDataSource, UITableViewDelegat
 
 // Long press table cell
 extension DestinationsViewController : UIGestureRecognizerDelegate {
+    
     func setupLongPressGesture() {
         let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
         longPressGesture.minimumPressDuration = 1.0 // 1 second press
         longPressGesture.delegate = self
+        
         self.destinationTableView.addGestureRecognizer(longPressGesture)
     }
 
@@ -151,34 +155,12 @@ extension DestinationsViewController : UIGestureRecognizerDelegate {
             if let indexPath = destinationTableView.indexPathForRow(at: touchPoint) {
                 
                 selectedDestination = destinations[indexPath.row]
-               
-                var newtextField = UITextField()
+                isEditingDestination = true
+                performSegue(withIdentifier: "goToAddDestination", sender: self)
                 
-                let alert = UIAlertController(title: "Edit Destination", message:nil, preferredStyle: UIAlertController.Style.alert)
-                
-                let save = UIAlertAction(title: "Save", style: .default) { (alertAction) in
-                    if let newItem = newtextField.text {
-                        if newItem != ""{
-                            self.selectedDestination!.locationName = newtextField.text!
-                            self.coreDataSave()
-                        }
-                    }
-                }
-
-                alert.addTextField { (textField) in
-                    textField.text = self.selectedDestination?.locationName
-                    newtextField = textField
-                }
-                
-                alert.addAction(save)
-                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
-                
-                // show the alert
-                self.present(alert, animated: true, completion: nil)
             }
         }
     }
-
 }
 
 // Core Data
@@ -186,7 +168,13 @@ extension DestinationsViewController {
     
     func fetchDestinations(){
         do {
-            self.destinations = try context.fetch(Destination.fetchRequest())
+            let request = Destination.fetchRequest()
+            let todaysDate = Date()
+            
+            let predicate = NSPredicate(format: "travelDate >= %@", todaysDate as NSDate)
+            request.predicate = predicate
+            
+            self.destinations = try context.fetch(request)
             
             DispatchQueue.main.async {
                 self.destinationTableView.reloadData()
@@ -211,49 +199,57 @@ extension DestinationsViewController {
     }
 }
 
-
-// date picker
 extension DestinationsViewController {
     
-    func doDatePicker(){
-        // DatePicker
-      // datePicker = UIDatePicker()
+    func searchForItem(destinationName : String) {
+        var searchedDestinationList = [Destination]()
+        fetchDestinations()
         
-        datePicker.preferredDatePickerStyle = .wheels
-        self.datePicker.backgroundColor = UIColor.white
-        datePicker.datePickerMode = .date
-
-        // ToolBar
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
-        toolBar.sizeToFit()
-
-        // Adding Button ToolBar
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneClick))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelClick))
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: true)
-        toolBar.isUserInteractionEnabled = true
-
-        self.toolBar.isHidden = false
-
+        for destination in destinations {
+            //change both text to be lower case
+            if destination.locationName!.lowercased().contains(destinationName.lowercased()) {
+                print("Here")
+                searchedDestinationList.append(destination)
+            }
+        }
+        destinations = searchedDestinationList
+        self.destinationTableView.reloadData()
     }
+}
 
-    @objc func doneClick() {
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateStyle = .medium
-        dateTextField.text = "\(datePicker.date)"
-        pickedDate = datePicker
-        print("I was clicked")
-        print(pickedDate.date)
-        //datePicker.isHidden = true
-        //self.toolBar.isHidden = true
+//search bar
+extension DestinationsViewController : UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchBarText = searchText
+        
+        if searchBarText.isEmpty{
+            getList()
+        } else {
+            searchForItem(destinationName: searchText)
+        }
     }
+    
+    //
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBarText == "" {
+            getList()
+        } else {
+            searchForItem(destinationName: searchBarText)
+        }
+        view.endEditing(true)
+    }
+}
 
-    @objc func cancelClick() {
-        //datePicker.isHidden = true
-        //self.toolBar.isHidden = true
+extension DestinationsViewController {
+    
+    func getList(){
+        fetchDestinations()
+        //destinations
+        //list.sort(by: {$0.name! > $1.name! })
+        //list.sort(by: {!$0.isPacked && $1.isPacked })
+        //list.sorted(by: {$0.isPacked > $1.name! })
         
     }
+
 }

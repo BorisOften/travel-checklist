@@ -14,6 +14,7 @@ class PackingListCell: UITableViewCell {
     
     @IBOutlet weak var cellBackgroundView: UIView!
     
+    @IBOutlet weak var quantityLabel: UILabel!
     
     @IBOutlet weak var checkedView: UIView!
     
