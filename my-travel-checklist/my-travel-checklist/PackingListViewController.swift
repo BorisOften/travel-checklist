@@ -159,6 +159,10 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         let action = UIContextualAction(style: .destructive, title: "Delete") { (action,view,completionHandler) in
             
             let deleteItem = self.list[indexPath.row]
+            
+            if deleteItem.isPacked{
+                self.destination?.packedItems -= 1
+            }
         
             self.context.delete(deleteItem)
             self.destination?.totalItems -= 1

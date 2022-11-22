@@ -11,6 +11,8 @@
 		81D5E4CC29205C13007BB8E1 /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */; };
 		81D5E4CE29205CC8007BB8E1 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */; };
 		81D5E4D0292090E5007BB8E1 /* CustomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CF292090E5007BB8E1 /* CustomToolbar.swift */; };
+		81D999EB292D56EE00B5359F /* PastListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D999EA292D56EE00B5359F /* PastListTableViewController.swift */; };
+		81D999ED292D70B600B5359F /* PastParkingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D999EC292D70B600B5359F /* PastParkingCell.swift */; };
 		81F0B481290C81EE008B1B84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B480290C81EE008B1B84 /* AppDelegate.swift */; };
 		81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0B482290C81EE008B1B84 /* SceneDelegate.swift */; };
 		81F0B488290C81EE008B1B84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81F0B486290C81EE008B1B84 /* Main.storyboard */; };
@@ -33,6 +35,8 @@
 		81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
 		81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		81D5E4CF292090E5007BB8E1 /* CustomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolbar.swift; sourceTree = "<group>"; };
+		81D999EA292D56EE00B5359F /* PastListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastListTableViewController.swift; sourceTree = "<group>"; };
+		81D999EC292D70B600B5359F /* PastParkingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastParkingCell.swift; sourceTree = "<group>"; };
 		81F0B47D290C81EE008B1B84 /* my-travel-checklist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "my-travel-checklist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F0B480290C81EE008B1B84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81F0B482290C81EE008B1B84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 				81F0B4CD290E238D008B1B84 /* DestinationCell.swift */,
 				81F0B4CF290E3057008B1B84 /* PackingListCell.swift */,
 				81F0B4D3290F3CA7008B1B84 /* PastCell.swift */,
+				81D999EC292D70B600B5359F /* PastParkingCell.swift */,
 			);
 			path = "my-travel-checklist";
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 				81F0B58B29143E0F008B1B84 /* SelectFromListTableViewController.swift */,
 				81D5E4C1291ED3DC007BB8E1 /* AddDestinationViewController.swift */,
 				81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */,
+				81D999EA292D56EE00B5359F /* PastListTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -217,7 +223,9 @@
 				81F0B58C29143E10008B1B84 /* SelectFromListTableViewController.swift in Sources */,
 				81F0B4D2290E3543008B1B84 /* PackingListViewController.swift in Sources */,
 				81F0B4D4290F3CA7008B1B84 /* PastCell.swift in Sources */,
+				81D999ED292D70B600B5359F /* PastParkingCell.swift in Sources */,
 				81F0B4CE290E238D008B1B84 /* DestinationCell.swift in Sources */,
+				81D999EB292D56EE00B5359F /* PastListTableViewController.swift in Sources */,
 				81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */,
 				81D5E4C2291ED3DC007BB8E1 /* AddDestinationViewController.swift in Sources */,
 				81F0B499290C85D9008B1B84 /* DestinationsViewController.swift in Sources */,
