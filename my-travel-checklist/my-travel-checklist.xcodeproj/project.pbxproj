@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81A32E0329301ADB001CCF81 /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A32E0229301ADB001CCF81 /* ActionSheet.swift */; };
+		81A32E052930370B001CCF81 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A32E042930370B001CCF81 /* Sorting.swift */; };
 		81D5E4C2291ED3DC007BB8E1 /* AddDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4C1291ED3DC007BB8E1 /* AddDestinationViewController.swift */; };
 		81D5E4CC29205C13007BB8E1 /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */; };
 		81D5E4CE29205CC8007BB8E1 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		81A32E0229301ADB001CCF81 /* ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
+		81A32E042930370B001CCF81 /* Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorting.swift; sourceTree = "<group>"; };
 		81D5E4C1291ED3DC007BB8E1 /* AddDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDestinationViewController.swift; sourceTree = "<group>"; };
 		81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
 		81D5E4CD29205CC8007BB8E1 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 			children = (
 				81D5E4CB29205C13007BB8E1 /* CustomDatePicker.swift */,
 				81D5E4CF292090E5007BB8E1 /* CustomToolbar.swift */,
+				81A32E0229301ADB001CCF81 /* ActionSheet.swift */,
+				81A32E042930370B001CCF81 /* Sorting.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -216,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F0B495290C8299008B1B84 /* welcomeViewController.swift in Sources */,
+				81A32E0329301ADB001CCF81 /* ActionSheet.swift in Sources */,
 				81F0B4D0290E3057008B1B84 /* PackingListCell.swift in Sources */,
 				81F0B4D6290F3EE1008B1B84 /* AboutViewController.swift in Sources */,
 				81F0B481290C81EE008B1B84 /* AppDelegate.swift in Sources */,
@@ -228,6 +235,7 @@
 				81D999EB292D56EE00B5359F /* PastListTableViewController.swift in Sources */,
 				81F0B483290C81EE008B1B84 /* SceneDelegate.swift in Sources */,
 				81D5E4C2291ED3DC007BB8E1 /* AddDestinationViewController.swift in Sources */,
+				81A32E052930370B001CCF81 /* Sorting.swift in Sources */,
 				81F0B499290C85D9008B1B84 /* DestinationsViewController.swift in Sources */,
 				81D5E4D0292090E5007BB8E1 /* CustomToolbar.swift in Sources */,
 				81D5E4CC29205C13007BB8E1 /* CustomDatePicker.swift in Sources */,
@@ -384,8 +392,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -411,8 +419,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

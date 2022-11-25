@@ -29,14 +29,12 @@ class PackingListViewController: UIViewController {
         searchBar.delegate = self
         
         getList()
-        
-        
     }
-    
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var newtextField = UITextField()
         var quantityTextField = UITextField()
+        
         let newItem = Items(context: context)
         newItem.date = Date()
         newItem.isPacked = false
@@ -61,11 +59,13 @@ class PackingListViewController: UIViewController {
             }
 
         alert.addTextField { (textField) in
+            textField.textAlignment = .center
             textField.placeholder = "add an Item"
             newtextField = textField
         }
         alert.addTextField { (textField) in
-            textField.placeholder = "add quantity"
+            textField.textAlignment = .center
+            textField.text = "1"
             textField.keyboardType = .numberPad
             quantityTextField = textField
         }
@@ -78,8 +78,7 @@ class PackingListViewController: UIViewController {
     }
     
     @IBAction func sortButtonPressed(_ sender: UIButton) {
-        destination?.sortBy = "DateEariestFirst"
-        getList()
+        showActionSheet()
     }
 }
 
@@ -105,7 +104,6 @@ extension PackingListViewController : UISearchBarDelegate {
         view.endEditing(true)
     }
 }
-
 
 // packingList TableView
 extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
@@ -147,8 +145,6 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
             selectedItem.isPacked = false
             destination?.packedItems -= 1
         }
-        print(destination?.totalItems)
-        print(destination?.packedItems)
         
         coreDataSave()
 
@@ -174,7 +170,6 @@ extension PackingListViewController: UITableViewDelegate, UITableViewDataSource{
         }
         return UISwipeActionsConfiguration(actions: [action])
     }
-    
 }
 
 //Searching function
@@ -199,8 +194,6 @@ extension PackingListViewController {
     }
 }
 
-//Sorting
-
 //Core data save
 extension PackingListViewController {
     
@@ -211,13 +204,11 @@ extension PackingListViewController {
         } else {
             list = []
         }
-        sortedList()
             
         DispatchQueue.main.async {
             self.packingListTableView.reloadData()
         }
     }
-    
     
     func coreDataSave(){
        
@@ -234,21 +225,40 @@ extension PackingListViewController {
 
 //sorted list
 extension PackingListViewController {
-    func sortedList() {
-        
-            if destination?.sortBy == nil || destination?.sortBy == "Alphabetically" {
-                
-                list.sort(by: {$0.name!.lowercased() < $1.name!.lowercased() })
-            } else if destination?.sortBy == "DateEariestFirst" {
-                list.sort(by: {$0.date! > $1.date! })
-            } else if destination?.sortBy == "DateLatestFirst" {
-                list.sort(by: {$0.date! < $1.date! })
-            } else if destination?.sortBy == "CheckItems" {
-                list.sort(by: {$0.isPacked && !$1.isPacked })
-            } else if destination?.sortBy == "UnCheckItems" {
-                list.sort(by: {!$0.isPacked && $1.isPacked })
-            }
-        }
     
+    func showActionSheet(){
+        let alert = UIAlertController(title: "Sort By", message: "Please Select an Option", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Alphabetically", style: .default, handler: { (_) in
+            self.list = Sorting().sortItems(listArray: self.list, sortBy: "Alphabetically")
+            self.packingListTableView.reloadData()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Date Added (Earliest First)", style: .default, handler: { (_) in
+            self.list = Sorting().sortItems(listArray: self.list, sortBy: "DateEariestFirst")
+            self.packingListTableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Date Added (Latest First)", style: .default, handler: { (_) in
+            self.list = Sorting().sortItems(listArray: self.list, sortBy: "DateLatestFirst")
+            self.packingListTableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Checked First", style: .default, handler: { (_) in
+            self.list = Sorting().sortItems(listArray: self.list, sortBy: "CheckItems")
+            self.packingListTableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Unchecked First", style: .default, handler: { (_) in
+            self.list = Sorting().sortItems(listArray: self.list, sortBy: "UnCheckItems")
+            self.packingListTableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
+        self.present(alert, animated: true)
+    }
 }
 

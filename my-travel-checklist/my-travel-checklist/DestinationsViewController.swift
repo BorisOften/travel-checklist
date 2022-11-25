@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class DestinationsViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -50,7 +51,7 @@ class DestinationsViewController: UIViewController {
         isEditingDestination = false
     }
     @IBAction func sortButtonPressed(_ sender: UIButton) {
-        
+        showActionSheet()
     }
     
     override func viewDidLayoutSubviews() {
@@ -157,7 +158,6 @@ extension DestinationsViewController : UIGestureRecognizerDelegate {
                 selectedDestination = destinations[indexPath.row]
                 isEditingDestination = true
                 performSegue(withIdentifier: "goToAddDestination", sender: self)
-                
             }
         }
     }
@@ -245,11 +245,34 @@ extension DestinationsViewController {
     
     func getList(){
         fetchDestinations()
-        //destinations
-        //list.sort(by: {$0.name! > $1.name! })
-        //list.sort(by: {!$0.isPacked && $1.isPacked })
-        //list.sorted(by: {$0.isPacked > $1.name! })
-        
     }
+}
 
+extension DestinationsViewController {
+    
+    func showActionSheet(){
+        
+        let alert = UIAlertController(title: "Sort By", message: "Please Select an Option", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Alphabetically", style: .default, handler: { (_) in
+            self.destinations = Sorting().sortDestination(destinationArray: self.destinations, sortBy: "Alphabetically")
+            self.destinationTableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Date Added (Earliest First)", style: .default, handler: { (_) in
+            self.destinations = Sorting().sortDestination(destinationArray: self.destinations, sortBy: "DateEariestFirst")
+            self.destinationTableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Date Added (Latest First)", style: .default, handler: { (_) in
+            self.destinations = Sorting().sortDestination(destinationArray: self.destinations, sortBy: "DateLatestFirst")
+            self.destinationTableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
+        
+        self.present(alert, animated: true)
+    }
 }

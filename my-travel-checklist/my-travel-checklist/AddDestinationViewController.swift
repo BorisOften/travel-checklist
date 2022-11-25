@@ -128,11 +128,11 @@ class AddDestinationViewController: UIViewController {
             return false
         }
         print(datePicker.date)
-        if datePicker.date < Date() {
+        /*if datePicker.date < Date() {
             dateErrorLabel.text = "Travel date can not be before today"
             dateErrorLabel.isHidden = false
             return false
-        }
+        }*/
         return true
     }
 }
