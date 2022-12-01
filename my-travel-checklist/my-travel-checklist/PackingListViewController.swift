@@ -65,7 +65,7 @@ class PackingListViewController: UIViewController {
         }
         alert.addTextField { (textField) in
             textField.textAlignment = .center
-            textField.text = "1"
+            textField.placeholder = "Add quantity (Default is 1)"
             textField.keyboardType = .numberPad
             quantityTextField = textField
         }
@@ -201,6 +201,8 @@ extension PackingListViewController {
         
         if let items = destination?.listItems?.allObjects {
             list = items as! [Items]
+            list = Sorting().sortItems(listArray: list, sortBy: destination?.sortBy ?? "Alphabetically")
+            print(destination?.sortBy)
         } else {
             list = []
         }
@@ -211,7 +213,6 @@ extension PackingListViewController {
     }
     
     func coreDataSave(){
-       
         do {
             try self.context.save()
         } catch  {
@@ -219,11 +220,10 @@ extension PackingListViewController {
             print("An error in destination saving")
         }
         getList()
-        
     }
 }
 
-//sorted list
+//action sheet pressed
 extension PackingListViewController {
     
     func showActionSheet(){
@@ -231,28 +231,33 @@ extension PackingListViewController {
         
         alert.addAction(UIAlertAction(title: "Alphabetically", style: .default, handler: { (_) in
             self.list = Sorting().sortItems(listArray: self.list, sortBy: "Alphabetically")
-            self.packingListTableView.reloadData()
+            self.destination?.sortBy = "Alphabetically"
+            self.coreDataSave()
             
         }))
         
         alert.addAction(UIAlertAction(title: "Date Added (Earliest First)", style: .default, handler: { (_) in
             self.list = Sorting().sortItems(listArray: self.list, sortBy: "DateEariestFirst")
-            self.packingListTableView.reloadData()
+            self.destination?.sortBy = "DateEariestFirst"
+            self.coreDataSave()
         }))
         
         alert.addAction(UIAlertAction(title: "Date Added (Latest First)", style: .default, handler: { (_) in
             self.list = Sorting().sortItems(listArray: self.list, sortBy: "DateLatestFirst")
-            self.packingListTableView.reloadData()
+            self.destination?.sortBy = "DateLatestFirst"
+            self.coreDataSave()
         }))
         
         alert.addAction(UIAlertAction(title: "Checked First", style: .default, handler: { (_) in
             self.list = Sorting().sortItems(listArray: self.list, sortBy: "CheckItems")
-            self.packingListTableView.reloadData()
+            self.destination?.sortBy = "CheckItems"
+            self.coreDataSave()
         }))
         
         alert.addAction(UIAlertAction(title: "Unchecked First", style: .default, handler: { (_) in
             self.list = Sorting().sortItems(listArray: self.list, sortBy: "UnCheckItems")
-            self.packingListTableView.reloadData()
+            self.destination?.sortBy = "UnCheckItems"
+            self.coreDataSave()
         }))
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in

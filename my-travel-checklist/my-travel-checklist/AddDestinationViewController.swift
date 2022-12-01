@@ -31,6 +31,9 @@ class AddDestinationViewController: UIViewController {
         return datePicker
     }()
     
+    let formatter = DateFormatter()
+    
+    
     // toolbar
     let toolbar = CustomToolBar()
     
@@ -41,6 +44,9 @@ class AddDestinationViewController: UIViewController {
         toolbar.customButtonsDelegate = self
         dateErrorLabel.isHidden = true
         destinationErrorLabel.isHidden = true
+        
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
                 
         style()
     }
@@ -104,11 +110,10 @@ class AddDestinationViewController: UIViewController {
         if selectedDestination != nil {
             destinationTextField.text = selectedDestination?.locationName
             
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .none
+            
             datePicker.date = (selectedDestination?.travelDate)!
             dateTextField.text = formatter.string(from: (selectedDestination?.travelDate)!)
+            print(datePicker.date)
             
             //weight and notes
             if let weight = selectedDestination?.weight, let notes = selectedDestination?.notes{
@@ -122,17 +127,23 @@ class AddDestinationViewController: UIViewController {
         if destinationTextField.text == "" {
             destinationErrorLabel.isHidden = false
             return false
+        } else {
+            destinationErrorLabel.isHidden = true
         }
+        
         if dateTextField.text == "" {
             dateErrorLabel.isHidden = false
             return false
+        } else {
+            dateErrorLabel.isHidden = true
         }
-        print(datePicker.date)
-        /*if datePicker.date < Date() {
-            dateErrorLabel.text = "Travel date can not be before today"
-            dateErrorLabel.isHidden = false
-            return false
-        }*/
+        if let date = datePicker.date.startOfDay(), let compareDate = Date().startOfDay() {
+            if date < compareDate {
+                dateErrorLabel.text = "Travel date can not be before today"
+                dateErrorLabel.isHidden = false
+                return false
+            }
+        }
         return true
     }
 }
@@ -141,9 +152,6 @@ class AddDestinationViewController: UIViewController {
 extension AddDestinationViewController: CustomToolBarDelegate {
     
     func doneButtonPressed() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
         
         dateTextField.text = formatter.string(from: datePicker.date)
         view.endEditing(true)

@@ -17,9 +17,9 @@ struct Sorting {
         if sortBy == "Alphabetically" {
             list.sort(by: {$0.locationName!.lowercased() < $1.locationName!.lowercased() })
         } else if sortBy == "DateEariestFirst" {
-            list.sort(by: {$0.travelDate! > $1.travelDate! })
-        } else if sortBy == "DateLatestFirst" {
             list.sort(by: {$0.travelDate! < $1.travelDate! })
+        } else if sortBy == "DateLatestFirst" {
+            list.sort(by: {$0.travelDate! > $1.travelDate! })
         } 
         
         return list

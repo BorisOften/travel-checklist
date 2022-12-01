@@ -9,6 +9,8 @@ import UIKit
 
 class PastDestinationsViewController: UIViewController {
     
+    
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var pastDestinations = [Destination]()
@@ -19,6 +21,7 @@ class PastDestinationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +33,11 @@ class PastDestinationsViewController: UIViewController {
         
         searchBar.delegate = self
     }
+    
+    @IBAction func sortButtonPressed(_ sender: UIButton) {
+        showActionSheet()
+    }
+    
 }
 
 extension PastDestinationsViewController {
@@ -39,7 +47,7 @@ extension PastDestinationsViewController {
             let request = Destination.fetchRequest()
             let todaysDate = Date()
             
-            let predicate = NSPredicate(format: "travelDate < %@", todaysDate as NSDate)
+            let predicate = NSPredicate(format: "travelDate <= %@", todaysDate as NSDate)
             request.predicate = predicate
             
             self.pastDestinations = try context.fetch(request)
@@ -85,6 +93,20 @@ extension PastDestinationsViewController : UITableViewDataSource, UITableViewDel
         
         selectedDestination = pastDestinations[indexPath.row]
         performSegue(withIdentifier: "goToPastList", sender: self)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action,view,completionHandler) in
+            print("I got deleted")
+        
+            let deleteDestination = self.pastDestinations[indexPath.row]
+            
+            self.context.delete(deleteDestination)
+            self.coreDataSave()
+        }
+        
+        return UISwipeActionsConfiguration(actions: [action])
     }
 }
 
@@ -153,5 +175,48 @@ extension PastDestinationsViewController {
         //list.sorted(by: {$0.isPacked > $1.name! })
         
     }
-
+    
+    func coreDataSave(){
+       
+        do {
+            try self.context.save()
+        } catch  {
+            print(error)
+            print("An error in destination saving")
+        }
+        getList()
+    }
 }
+
+extension PastDestinationsViewController {
+    
+    func showActionSheet(){
+        
+        let alert = UIAlertController(title: "Sort By", message: "Please Select an Option", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Alphabetically", style: .default, handler: { (_) in
+            self.pastDestinations = Sorting().sortDestination(destinationArray: self.pastDestinations, sortBy: "Alphabetically")
+            StartState.sortBy = "Alphabetically"
+            self.tableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Travel Date (Earliest First)", style: .default, handler: { (_) in
+            self.pastDestinations = Sorting().sortDestination(destinationArray: self.pastDestinations, sortBy: "DateEariestFirst")
+            StartState.sortBy = "DateEariestFirst"
+            self.tableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Travel Date (Latest First)", style: .default, handler: { (_) in
+            self.pastDestinations = Sorting().sortDestination(destinationArray: self.pastDestinations, sortBy: "DateLatestFirst")
+            StartState.sortBy = "DateLatestFirst"
+            self.tableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
+        
+        self.present(alert, animated: true)
+    }
+}
+

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class DestinationsViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -26,7 +25,7 @@ class DestinationsViewController: UIViewController {
         super.viewDidLoad()
         
         
-        fetchDestinations()
+        getList()
         
         destinationTableView.delegate = self
         destinationTableView.dataSource = self
@@ -46,18 +45,11 @@ class DestinationsViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        fetchDestinations()
-        
+        getList()
         isEditingDestination = false
     }
     @IBAction func sortButtonPressed(_ sender: UIButton) {
         showActionSheet()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        //self.tabBarController?.tabBar.frame.size.height = 10
-        //self.tabBarController?.tabBar.frame.origin.y = view.frame.height - 95
     }
     
 }
@@ -169,9 +161,11 @@ extension DestinationsViewController {
     func fetchDestinations(){
         do {
             let request = Destination.fetchRequest()
-            let todaysDate = Date()
+            let todaysDate = Date().startOfDay()
             
-            let predicate = NSPredicate(format: "travelDate >= %@", todaysDate as NSDate)
+            print(todaysDate)
+            print(Date().startOfDay())
+            let predicate = NSPredicate(format: "travelDate >= %@", todaysDate as! NSDate)
             request.predicate = predicate
             
             self.destinations = try context.fetch(request)
@@ -183,7 +177,6 @@ extension DestinationsViewController {
         } catch  {
             print("An error fetching")
         }
-        self.destinationTableView.reloadData()
     }
     
     
@@ -195,7 +188,7 @@ extension DestinationsViewController {
             print(error)
             print("An error in destination saving")
         }
-        fetchDestinations()
+        getList()
     }
 }
 
@@ -245,6 +238,9 @@ extension DestinationsViewController {
     
     func getList(){
         fetchDestinations()
+        
+        destinations = Sorting().sortDestination(destinationArray: destinations, sortBy: StartState.sortBy)
+        self.destinationTableView.reloadData()
     }
 }
 
@@ -256,16 +252,19 @@ extension DestinationsViewController {
         
         alert.addAction(UIAlertAction(title: "Alphabetically", style: .default, handler: { (_) in
             self.destinations = Sorting().sortDestination(destinationArray: self.destinations, sortBy: "Alphabetically")
+            StartState.sortBy = "Alphabetically"
             self.destinationTableView.reloadData()
         }))
         
-        alert.addAction(UIAlertAction(title: "Date Added (Earliest First)", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "Travel Date (Earliest First)", style: .default, handler: { (_) in
             self.destinations = Sorting().sortDestination(destinationArray: self.destinations, sortBy: "DateEariestFirst")
+            StartState.sortBy = "DateEariestFirst"
             self.destinationTableView.reloadData()
         }))
         
-        alert.addAction(UIAlertAction(title: "Date Added (Latest First)", style: .default, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "Travel Date (Latest First)", style: .default, handler: { (_) in
             self.destinations = Sorting().sortDestination(destinationArray: self.destinations, sortBy: "DateLatestFirst")
+            StartState.sortBy = "DateLatestFirst"
             self.destinationTableView.reloadData()
         }))
         
